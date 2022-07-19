@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active:
+    - local
+
+---
+spring:
+  config:
+    activate:
+      on-profile:
+      - local
+  kafka:
+    producer:
+      bootstrap-servers: broker.kafka.com:9094
+      key-serializer: org.apache.kafka.common.serialization.IntegerSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    admin:
+      properties:
+        bootstrap.servers: broker.kafka.com:9094

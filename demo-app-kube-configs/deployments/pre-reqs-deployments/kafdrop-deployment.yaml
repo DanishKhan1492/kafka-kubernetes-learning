@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: poc
+  name: kafdrop
+  labels:
+    name: kafdrop
+
+spec:
+  selector: 
+    matchLabels:
+      name: kafdrop
+  replicas: 1
+  strategy: 
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: 
+        name: kafdrop
+    spec:
+      containers:
+      - name: kafdrop
+        image: danishkyndryl/learningapis:kafdrop
+        ports:
+          - containerPort: 9000
+        imagePullPolicy: Never
+        resources: {}
+        env:
+          - name: KAFKA_BROKERCONNECT
+            value: kafka-headless.default.svc.cluster.local:9092
+      imagePullSecrets: 
+        - name: dockersecret
+      restartPolicy: Always

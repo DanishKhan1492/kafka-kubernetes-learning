@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: poc
+  name: crud-consumer-service
+  labels:
+    name:  crud-service
+spec:
+  type: ClusterIP
+  selector:
+    name: crud-consumer-deploy
+  ports:
+  - port: 8089
+    targetPort: 8089

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: poc
+  name: crud-consumer-deploy
+  labels:
+    name: crud-consumer-deploy
+
+spec:
+  selector: 
+    matchLabels:
+      name: crud-consumer-deploy
+  replicas: 1
+  strategy: 
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      labels: 
+        name: crud-consumer-deploy
+    spec:
+      containers:
+      - name: crud
+        image: danishkyndryl/learningapis:crudconsumer
+        imagePullPolicy: Always
+        resources: {}
+        envFrom:
+          - configMapRef:
+              name: crud-configmap
+        livenessProbe: 
+          httpGet:
+            path: /check
+            port: 8089
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe: 
+          httpGet:
+            path: /check
+            port: 8089
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      imagePullSecrets:
+        - name: dockersecret
+      restartPolicy: Always

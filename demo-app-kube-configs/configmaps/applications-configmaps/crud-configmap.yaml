@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: poc
+  name: crud-configmap
+  labels:
+    name: crud-configmap
+data:
+  DB_HOST: mysql-service
+  DB_PORT: "3306"
+  DB_NAME: crud
+  DB_USERNAME: root
+  DB_PASSWORD: root
+  KAFKA_DOMAIN: kafka-headless.default.svc.cluster.local
+  KAFKA_PORT: "9092"

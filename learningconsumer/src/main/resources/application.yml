@@ -1,0 +1,32 @@
+spring:
+  kafka:
+    bootstrap-servers: broker.kafka.com:9094
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      ssl:
+#        trust-store-location:
+#        key-password:
+#        key-store-location:
+#        key-store-password:
+#    If we also configure producer in consumer app then TLS can be configured using below properties for Producer.
+#    producer:
+#      properties:
+#        security:
+#          protocol: ssl
+#        ssl.endpoint.identification.algorithm:
+  datasource:
+    url: jdbc:h2:mem:books
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8081
